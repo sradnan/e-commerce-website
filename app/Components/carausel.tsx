@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import React, { useMemo } from "react";
 import Image from "next/image";
 import Autoplay from "embla-carousel-autoplay";
 
@@ -15,25 +15,26 @@ import log2 from "./image/Frame 1000002405 (1).png";
 import log3 from "./image/Frame 1000002405 (2).png";
 import log4 from "./image/Frame 1000002405 (3).png";
 import log5 from "./image/Frame 1000002405 (4).png";
-// ✅ change this image
 
-const logos = [log1, log2, log3, log4, log5, ];
+const logos = [log1, log2, log3, log4, log5];
 
 export default function CarouselLogo() {
-  const plugin = React.useRef(
-    Autoplay({
-      delay: 1200,
-      stopOnInteraction: false,
-      pauseOnMouseEnter: true,
-    })
+  const autoplay = useMemo(
+    () =>
+      Autoplay({
+        delay: 1200,
+        stopOnInteraction: false,
+      }),
+    []
   );
 
   return (
     <div className="w-full py-10 container mx-auto md:px-28 bg-white">
-      <h1 className="text-center text-5xl sm:text-3xl p-6 m-3 font-semibold">Built for Core Industries</h1>
-      
-      <div className="relative overflow-hidden">
+      <h1 className="text-center text-3xl sm:text-4xl font-semibold mb-6">
+        Built for Core Industries
+      </h1>
 
+      <div className="relative overflow-hidden">
         {/* LEFT SHADOW */}
         <div className="pointer-events-none absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-white to-transparent z-10" />
 
@@ -41,7 +42,7 @@ export default function CarouselLogo() {
         <div className="pointer-events-none absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
         <Carousel
-          plugins={[plugin.current]}
+          plugins={[autoplay]}
           opts={{
             loop: true,
             align: "start",
@@ -52,7 +53,7 @@ export default function CarouselLogo() {
             {logos.map((logo, index) => (
               <CarouselItem
                 key={index}
-                className="basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4"
+                className="basis-1/2 sm:basis-1/3 md:basis-1/4"
               >
                 <div className="flex items-center justify-center">
                   <Image
@@ -67,7 +68,6 @@ export default function CarouselLogo() {
             ))}
           </CarouselContent>
         </Carousel>
-
       </div>
     </div>
   );
