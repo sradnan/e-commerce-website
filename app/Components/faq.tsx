@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 export default function FAQ() {
-  const [openId, setOpenId] = useState(1);
+  const [openId, setOpenId] = useState<number | null>(1);
 
   const faqData = [
     {
@@ -44,10 +44,14 @@ export default function FAQ() {
     },
   ];
 
+  const toggleFAQ = (id: number) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
+
   return (
     <>
       {/* Header */}
-      <div className="text-center  mt-10 px-4">
+      <div className="text-center mt-10 px-4">
         <p className="text-sm text-orange-500 mb-2">FAQ</p>
         <h1 className="text-2xl md:text-4xl font-bold">
           Everything you need to know about <br className="hidden md:block" />
@@ -58,31 +62,28 @@ export default function FAQ() {
       {/* FAQ Section */}
       <div className="flex justify-center p-4 md:p-8">
         <div className="w-full max-w-2xl bg-gray-50 shadow-md rounded-xl p-4 md:p-6">
-          
           <div className="space-y-3">
             {faqData.map((item) => (
               <div
                 key={item.id}
-                className=" shadow-2xl rounded-lg p-4 bg-white"
+                className="shadow-2xl rounded-lg p-4 bg-white"
               >
                 {/* Question */}
                 <div
                   className="flex justify-between items-center cursor-pointer"
-                  onClick={() =>
-                    setOpenId(openId === item.id ? null : item.id)
-                  }
+                  onClick={() => toggleFAQ(item.id)}
                 >
                   <h3
-                    className={`font-bold text-xl md:text-base transition ${
+                    className={`font-bold text-base md:text-lg transition ${
                       openId === item.id
-                        ? "text-orange-500 "
+                        ? "text-orange-500"
                         : "text-gray-800"
                     }`}
                   >
                     {item.question}
                   </h3>
 
-                  <span className="text-xl font-bold ">
+                  <span className="text-xl font-bold">
                     {openId === item.id ? "−" : "+"}
                   </span>
                 </div>
@@ -100,7 +101,6 @@ export default function FAQ() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
     </>
